@@ -1,0 +1,111 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package Environment;
+
+//import java.awt.Color;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Point;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author truuser
+ */
+public class Grid extends JPanel 
+{
+    
+    
+    public Grid()
+    {
+        //Calls the constructor with X columns and Y rows
+        this(102, 52);
+    }
+    
+    public Grid(int inputX, int inputY)
+    {
+        super(new GridLayout(inputX, inputY));
+        maze = new Cell[inputX][inputY];
+        //mazePanel = new CellPanel[inputX][inputY];
+        setGridSize(inputX, inputY);
+        createGrid();
+    }
+    
+    private void createGrid()
+    {
+        for(int xx=0;xx<sizeX;xx++)
+        {            
+            for(int yy=0;yy<sizeY;yy++)
+            {
+                //Loops through to initialize individual cells
+                //Special case: boundary cells are identified with an extra
+                //              flag so a seperate constructor is called
+                if(xx==0 || yy==0 || xx==sizeX-1 || yy==sizeY-1)
+                {
+                    //boundary cells (edge)
+                    maze[xx][yy] = new Cell(xx, yy, true, false, true);
+                    maze[xx][yy].getPanel().setBackground(Color.RED);
+                    this.add(maze[xx][yy].getPanel());
+                }
+                else
+                {
+                    //normal non-boundary cells
+                    maze[xx][yy] = new Cell(xx, yy, true, false);
+                    this.add(maze[xx][yy].getPanel());
+                }
+            }
+        }
+    }
+    
+    /**
+     * Returns a reference to the cell at the specified location
+     * @Return Cell 
+     */
+    public Cell getCellAt(int posX, int posY)
+    {
+        return maze[posX][posY];
+    }
+    
+    private void setGridSize(int inputX, int inputY)
+    {
+        sizeX = inputX;
+        sizeY = inputY;
+    }
+    
+    /**
+     * 
+     * @return index of the start cell 
+     */
+    public Point getStartLoc()
+    {
+        return null;
+    }
+    
+    /**
+     * 
+     * @return indexes of the end cells
+     */
+    public Point[] getExitLocs()
+    {
+        return null;
+    }
+    
+    /**
+     * Rerurns an instance of the grid, if null creates a new one
+     */
+    public static Grid getInstance()
+    {
+        if(myInstance == null) {
+            myInstance = new Grid();
+        }
+        return myInstance;
+    }
+    //private CellPanel[][] mazePanel;
+    private Cell[][] maze;
+    private int sizeX;
+    private int sizeY;
+    private static Grid myInstance;
+}
