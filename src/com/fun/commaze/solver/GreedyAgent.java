@@ -1,5 +1,5 @@
 /*
- * GreedyBFS searching engine (algorithm)
+ * GreedyBFS searching engine (algorithm) 
  */
 package com.fun.commaze.solver;
 
